@@ -1,115 +1,93 @@
 <!DOCTYPE html>
-<html lang="pt" data-theme="light">
+<html lang="pt" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAT-D</title>
-  <link rel="stylesheet" href="style.css">
+  <title>CAT-D · Data Center Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     AUTH SCREEN
-══════════════════════════════════════════ -->
+<!-- AUTH -->
 <div id="auth" class="screen active">
-
   <div class="auth-theme-btn">
-    <button class="theme-btn" onclick="toggleTheme()" title="Alternar tema">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
+    <button class="theme-btn" onclick="toggleTheme()">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
   </div>
-
   <div class="auth-wrap">
-    <div class="auth-eyebrow">
-      <div class="auth-logo-sq">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
         <svg viewBox="0 0 20 20" fill="none">
           <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white"/>
-          <rect x="12" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".65"/>
-          <rect x="2" y="12" width="6" height="6" rx="1.5" fill="white" opacity=".4"/>
-          <rect x="12" y="12" width="6" height="6" rx="1.5" fill="white" opacity=".25"/>
+          <rect x="12" y="2" width="6" height="6" rx="1.5" fill="white" opacity=".6"/>
+          <rect x="2" y="12" width="6" height="6" rx="1.5" fill="white" opacity=".35"/>
+          <rect x="12" y="12" width="6" height="6" rx="1.5" fill="white" opacity=".2"/>
         </svg>
       </div>
       <div>
         <div class="auth-logo-name">CAT-D</div>
-        <div class="auth-logo-ver">Data Center Control · v2.4</div>
+        <div class="auth-logo-ver">Data Center Control · v3.0</div>
       </div>
-    </div>
-
-    <div class="auth-headline">Controlo<br><span>Térmico</span></div>
-    <div class="auth-sub">
-      Sistema de monitorização e gestão de infraestrutura.<br>
-      Faça login ou crie uma conta para continuar.
     </div>
 
     <div class="auth-card">
+      <div class="auth-title">Bem-vindo</div>
+      <div class="auth-sub">Sistema de monitorização de infraestrutura. Faça login para continuar.</div>
+
       <div class="tab-row">
         <button class="t-tab on" id="tab-login" onclick="switchTab('login')">Entrar</button>
-        <button class="t-tab"    id="tab-reg"   onclick="switchTab('reg')">Registar</button>
+        <button class="t-tab"   id="tab-reg"   onclick="switchTab('reg')">Registar</button>
       </div>
 
-      <!-- FORM LOGIN -->
       <div id="f-login">
         <div class="f-group">
-          <label class="f-label" for="lu">Utilizador</label>
-          <input class="f-input" id="lu" type="text" placeholder="ex: admin" autocomplete="username">
+          <label class="f-label" for="lu">Email</label>
+          <input class="f-input" id="lu" type="email" placeholder="ex: admin@catd.io" autocomplete="email">
         </div>
         <div class="f-group">
           <label class="f-label" for="lp">Palavra-passe</label>
           <input class="f-input" id="lp" type="password" placeholder="••••••••" autocomplete="current-password">
         </div>
-        <button class="btn-primary" onclick="doLogin()">Entrar no sistema</button>
-        <div class="f-err" id="lerr">Utilizador ou palavra-passe incorretos.</div>
+        <button class="btn-primary" id="btnLogin" onclick="doLogin()">Entrar no sistema</button>
+        <div class="f-err" id="lerr"></div>
       </div>
 
-      <!-- FORM REGISTO -->
       <div id="f-reg" style="display:none">
         <div class="f-group">
-          <label class="f-label" for="rn">Nome completo</label>
-          <input class="f-input" id="rn" type="text" placeholder="ex: João Silva" autocomplete="name">
+          <label class="f-label" for="rn">Username</label>
+          <input class="f-input" id="rn" type="text" placeholder="ex: joao.silva" autocomplete="username">
         </div>
         <div class="f-group">
-          <label class="f-label" for="ru">Utilizador</label>
-          <input class="f-input" id="ru" type="text" placeholder="ex: joao.silva" autocomplete="username">
+          <label class="f-label" for="ru">Email</label>
+          <input class="f-input" id="ru" type="email" placeholder="ex: joao@catd.io" autocomplete="email">
         </div>
         <div class="f-group">
           <label class="f-label" for="rp">Palavra-passe</label>
           <input class="f-input" id="rp" type="password" placeholder="mínimo 6 caracteres" autocomplete="new-password">
         </div>
-        <div class="f-group">
-          <label class="f-label" for="rp2">Confirmar palavra-passe</label>
-          <input class="f-input" id="rp2" type="password" placeholder="repita a palavra-passe" autocomplete="new-password">
-        </div>
-        <button class="btn-primary" onclick="doReg()">Criar conta</button>
-        <div class="f-err" id="rerr">Erro ao criar conta.</div>
+        <button class="btn-primary" id="btnReg" onclick="doReg()">Criar conta</button>
+        <div class="f-err" id="rerr"></div>
         <div class="f-ok"  id="rok">Conta criada! Podes fazer login agora.</div>
       </div>
 
-      <div class="auth-divider" id="auth-hint">
-        Conta de demonstração: <a onclick="fillDemo()">admin / admin123</a>
+      <div class="auth-hint" id="auth-hint">
+        Demonstração: <a onclick="fillDemo()">admin@catd.io / admin123</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     DASHBOARD SCREEN
-══════════════════════════════════════════ -->
+<!-- DASHBOARD -->
 <div id="dash" class="screen">
-
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="logo-wrap">
-      <div class="logo-sq">
+      <div class="logo-icon">
         <svg viewBox="0 0 18 18" fill="none">
           <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white"/>
           <rect x="11" y="1" width="6" height="6" rx="1.5" fill="white" opacity=".6"/>
@@ -118,188 +96,232 @@
         </svg>
       </div>
       <div>
-        <div class="logo-text">CAT-D</div>
+        <div class="logo-name">CAT-D</div>
         <div class="logo-ver">Data Center Control</div>
       </div>
     </div>
 
-    <div class="top-center">
+    <div class="top-nav">
       <button class="top-nav-btn on" onclick="gotoPanel('heat',this)">
         <svg viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="currentColor" opacity=".9"/><rect x="8" y="1" width="5" height="5" rx="1" fill="currentColor" opacity=".6"/><rect x="1" y="8" width="5" height="5" rx="1" fill="currentColor" opacity=".4"/><rect x="8" y="8" width="5" height="5" rx="1" fill="currentColor" opacity=".7"/></svg>
-        Mapa Térmico
+        Rack / Temperatura
       </button>
       <button class="top-nav-btn" onclick="gotoPanel('fan',this)">
         <svg viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="2" fill="currentColor"/><path d="M7.5 1.5C7.5 1.5 9 4 7.5 5.5M7.5 13.5C7.5 13.5 6 11 7.5 9.5M1.5 7.5C1.5 7.5 4 6 5.5 7.5M13.5 7.5C13.5 7.5 11 9 9.5 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        Ventoinha
+        Controlo Ventoinha
       </button>
       <button class="top-nav-btn" onclick="gotoPanel('db',this)">
         <svg viewBox="0 0 15 15" fill="none"><ellipse cx="7.5" cy="4" rx="5" ry="2" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 4v3.5c0 1.1 2.24 2 5 2s5-.9 5-2V4" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 7.5V11c0 1.1 2.24 2 5 2s5-.9 5-2V7.5" stroke="currentColor" stroke-width="1.2"/></svg>
-        Base de Dados
+        Histórico
       </button>
     </div>
 
     <div class="top-right">
-      <button class="theme-btn" onclick="toggleTheme()" title="Alternar tema claro/escuro">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
-          <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
-          <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
+      <button class="theme-btn" onclick="toggleTheme()">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <div class="pulse-dot" id="sysDot"></div>
-      <span class="sys-label" id="sysLabel">Sistema operacional</span>
+
       <div class="user-chip">
         <div class="user-av" id="uav">A</div>
-        <div class="user-nm" id="unm">Admin</div>
+        <div class="user-nm" id="unm">–</div>
       </div>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
-    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sid-label">Vistas</div>
       <button class="sid-btn on" onclick="gotoPanel('heat',this)">
         <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".9"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".3"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".7"/></svg>
-        Mapa Térmico
+        Rack
         <span class="sid-badge live">LIVE</span>
       </button>
       <button class="sid-btn" onclick="gotoPanel('fan',this)">
         <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.2" fill="currentColor"/><path d="M8 1C8 1 10 4.5 8 6M8 15C8 15 6 11.5 8 10M1 8C1 8 4.5 6 6 8M15 8C15 8 11.5 10 10 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        Curva Ventoinha
+        Ventoinha
       </button>
       <button class="sid-btn" onclick="gotoPanel('db',this)">
         <svg viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="4.5" rx="5.5" ry="2.2" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 4.5V8c0 1.2 2.46 2.2 5.5 2.2S13.5 9.2 13.5 8V4.5" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 8V11.5c0 1.2 2.46 2.2 5.5 2.2s5.5-1 5.5-2.2V8" stroke="currentColor" stroke-width="1.2"/></svg>
-        Base de Dados
+        Histórico
       </button>
       <div class="sid-label">Sistema</div>
-      <button class="sid-btn" style="cursor:default">
+      <button class="sid-btn" style="cursor:default" id="sideUptime">
         <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         Uptime
         <span class="sid-badge" id="uptimeBadge">0:00</span>
       </button>
       <button class="sid-btn" style="cursor:default">
         <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h6M5 10h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Registos
-        <span class="sid-badge" id="recBadge">48</span>
+        Gateways
+        <span class="sid-badge" id="gwBadge">–</span>
       </button>
     </div>
 
-    <!-- CONTENT -->
     <div class="content">
-      <!-- Stats globais -->
+
       <div class="stats-row">
         <div class="stat-card" style="--accent-line:var(--accent)">
-          <div class="stat-label">Temperatura Média</div>
-          <div class="stat-val" id="sAvg">--<span class="stat-unit">°C</span></div>
-          <div class="stat-badge b-info" id="sAvgB">calculando</div>
-        </div>
-        <div class="stat-card" style="--accent-line:var(--hot)">
-          <div class="stat-label">Temperatura Máxima</div>
-          <div class="stat-val" style="color:var(--hot)" id="sMax">--<span class="stat-unit">°C</span></div>
-          <div class="stat-badge b-warn">monitorizar</div>
-        </div>
-        <div class="stat-card" style="--accent-line:var(--warm)">
-          <div class="stat-label">Hotspots Ativos</div>
-          <div class="stat-val" style="color:var(--warm)" id="sHot">--</div>
-          <div class="stat-badge b-warn">zonas &gt;70°C</div>
+          <div class="stat-label">Temperatura</div>
+          <div class="stat-val" id="sTemp">--<span class="stat-unit">°C</span></div>
         </div>
         <div class="stat-card" style="--accent-line:var(--cool)">
-          <div class="stat-label">Estado do Sistema</div>
-          <div class="stat-val" id="sSt" style="font-size:18px;padding-top:6px">ONLINE</div>
-          <div class="stat-badge b-ok" id="sStB">operacional</div>
+          <div class="stat-label">Fan Speed</div>
+          <div class="stat-val" id="sHum">--<span class="stat-unit">%</span></div>
         </div>
+        <div class="stat-card" style="--accent-line:var(--warn)">
+          <div class="stat-label">Temp. Máxima</div>
+          <div class="stat-val" id="sSpeed">--<span class="stat-unit">°C</span></div>
+        </div>
+
       </div>
 
-      <!-- PAINEL: MAPA TÉRMICO -->
+      <!-- PANEL: RACK / HEAT -->
       <div class="panel on" id="p-heat">
-        <div class="heat-wrap">
+        <div class="heat-card">
           <div class="heat-header">
             <div>
-              <div class="section-title">Mapa de temperatura — Rack Grid 8×4</div>
-              <div class="section-sub">Atualiza a cada 4s · última leitura há <span id="luT">0</span>s</div>
+              <div class="section-title">Rack · Dados em tempo real</div>
+              <div class="section-sub">Atualiza a cada 8s · <span id="luT">aguardando</span></div>
             </div>
-            <div class="legend-wrap">
-              <span class="leg-label">20°C</span>
-              <div class="leg-bar"></div>
-              <span class="leg-label">85°C</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="legend-wrap">
+                <span class="leg-label">20°C</span>
+                <div class="leg-bar"></div>
+                <span class="leg-label">85°C</span>
+              </div>
+              <button class="btn-refresh" onclick="fetchData()">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13.5 8A5.5 5.5 0 1 1 10 3.17M13.5 3v5h-5"/></svg>
+                Atualizar
+              </button>
             </div>
           </div>
-          <div class="heat-grid" id="hGrid"></div>
+          <div class="heat-body" id="heatBody">
+            <div class="state-box">
+              <div class="spinner"></div>
+              A carregar dados...
+            </div>
+          </div>
+        </div>
+
+        <!-- Link Gateway Card -->
+        <div class="link-card">
+          <div class="section-title">Associar Gateway</div>
+          <div class="section-sub" style="margin-top:4px">Introduz o ID do gateway e o código de ligação</div>
+          <div class="link-row">
+            <input class="link-inp" type="text" id="linkGwId" placeholder="Gateway ID (ex: gw-abc123)">
+            <input class="link-inp" type="text" id="linkCode" placeholder="Código de ligação">
+            <button class="btn-link" id="btnLink" onclick="linkGateway()">Associar</button>
+          </div>
+          <div class="f-err" id="linkErr" style="margin-top:10px"></div>
+          <div class="f-ok"  id="linkOk"  style="margin-top:10px"></div>
+        </div>
+
+        <div class="heat-card" id="ctrlCard" style="display:none">
+          <div class="heat-header">
+            <div>
+              <div class="section-title">Controllers do Gateway</div>
+              <div class="section-sub">Leituras individuais por controller</div>
+            </div>
+          </div>
+          <div style="padding:16px" id="ctrlBody"></div>
         </div>
       </div>
 
-      <!-- PAINEL: VENTOINHA -->
+      <!-- PANEL: VENTOINHA -->
       <div class="panel" id="p-fan">
-        <div class="fan-section">
-          <div class="fan-section-hdr">
-            <div class="section-title">Curva de controlo — ventoinha principal</div>
-            <div class="section-sub">Ajuste os parâmetros para redefinir a curva em tempo real</div>
+
+        <!-- Gateway + Rack selector -->
+        <div class="heat-card">
+          <div class="heat-header">
+            <div>
+              <div class="section-title">Controlo por rack</div>
+              <div class="section-sub">Define os limites individualmente para cada rack</div>
+            </div>
           </div>
-          <div class="fan-body">
-            <div class="chart-wrap">
-              <canvas id="fChart"></canvas>
+          <div style="padding:16px 20px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+            <div style="flex:1;min-width:180px">
+              <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Gateway ID</label>
+              <input type="text" id="aGwId" oninput="updLimits()" placeholder="vazio = primeiro gateway"
+                style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none;transition:border-color .2s"
+                onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor=''">
+            </div>
+            <div style="flex:1;min-width:180px">
+              <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Rack</label>
+              <select id="aRackSel" onchange="updLimits()"
+                style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none;cursor:pointer">
+                <option value="all">Todos os racks</option>
+              </select>
             </div>
           </div>
         </div>
-        <div class="fan-section">
-          <div class="fan-section-hdr"><div class="section-title">Parâmetros</div></div>
-          <div class="fan-body">
-            <div class="controls-grid">
-              <div class="ctrl-card">
-                <div class="ctrl-head"><span class="ctrl-name">Temp. arranque</span><span class="ctrl-val" id="vST">35<span class="ctrl-unit">°C</span></span></div>
-                <input type="range" min="20" max="60" value="35" id="rST" oninput="updFan()">
+
+        <!-- Sliders -->
+        <div class="controls-card">
+          <div class="section-title">Limites — <span id="rackLabel" style="color:var(--accent2)">todos os racks</span></div>
+          <div class="controls-grid" style="margin-top:20px">
+            <div class="ctrl-card">
+              <div class="ctrl-head">
+                <span class="ctrl-name">CPU crítico</span>
+                <span class="ctrl-val" id="vMaxCpu">80<span class="ctrl-unit">%</span></span>
               </div>
-              <div class="ctrl-card">
-                <div class="ctrl-head"><span class="ctrl-name">Temp. máxima</span><span class="ctrl-val" id="vMT">75<span class="ctrl-unit">°C</span></span></div>
-                <input type="range" min="50" max="95" value="75" id="rMT" oninput="updFan()">
+              <input type="range" min="10" max="100" value="80" id="rMaxCpu" oninput="updLimits()">
+              <div style="display:flex;justify-content:space-between;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2)"><span>10%</span><span>100%</span></div>
+            </div>
+            <div class="ctrl-card">
+              <div class="ctrl-head">
+                <span class="ctrl-name">Temperatura máxima</span>
+                <span class="ctrl-val" id="vMaxTemp">60<span class="ctrl-unit">°C</span></span>
               </div>
-              <div class="ctrl-card">
-                <div class="ctrl-head"><span class="ctrl-name">RPM mínimo</span><span class="ctrl-val" id="vMR">800<span class="ctrl-unit">rpm</span></span></div>
-                <input type="range" min="200" max="2000" step="100" value="800" id="rMR" oninput="updFan()">
+              <input type="range" min="30" max="90" value="60" id="rMaxTemp" oninput="updLimits()">
+              <div style="display:flex;justify-content:space-between;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2)"><span>30°C</span><span>90°C</span></div>
+            </div>
+            <div class="ctrl-card">
+              <div class="ctrl-head">
+                <span class="ctrl-name">Velocidade ventoinha</span>
+                <span class="ctrl-val" id="vMaxRpm">260<span class="ctrl-unit">rpm</span></span>
               </div>
-              <div class="ctrl-card">
-                <div class="ctrl-head"><span class="ctrl-name">RPM máximo</span><span class="ctrl-val" id="vXR">3600<span class="ctrl-unit">rpm</span></span></div>
-                <input type="range" min="1000" max="5000" step="100" value="3600" id="rXR" oninput="updFan()">
-              </div>
+              <input type="range" min="0" max="260" value="260" id="rMaxRpm" oninput="updLimits()">
+              <div style="display:flex;justify-content:space-between;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2)"><span>0 rpm</span><span>260 rpm</span></div>
             </div>
           </div>
-        </div>
-        <div class="pts-section">
-          <div class="section-title">Pontos da curva</div>
-          <div class="pts-row" id="ptRow"></div>
+
+          <!-- Resumo -->
+          <div style="margin-top:20px;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;color:var(--text2)">
+            <span>Gateway: </span><span id="previewGw" style="color:var(--accent2)">–</span>
+            &nbsp;·&nbsp;
+            <span>Rack: </span><span id="previewRack" style="color:var(--accent2)">todos</span>
+            &nbsp;·&nbsp;
+            <span>CPU: </span><span id="previewCpu" style="color:var(--text)">80%</span>
+            &nbsp;·&nbsp;
+            <span>Temp: </span><span id="previewTemp" style="color:var(--text)">60°C</span>
+            &nbsp;·&nbsp;
+            <span>Fan: </span><span id="previewRpm" style="color:var(--text)">260 rpm</span>
+          </div>
+
+          <button class="btn-send" id="btnSend" onclick="sendLimits()" style="margin-top:16px">Aplicar</button>
         </div>
       </div>
 
-      <!-- PAINEL: BASE DE DADOS -->
+      <!-- PANEL: HISTÓRICO -->
       <div class="panel" id="p-db">
-        <div class="db-section">
+        <div class="db-card">
           <div class="db-top">
             <input class="db-inp" type="text" id="dbQ" placeholder="Pesquisar registos..." oninput="renderDB()">
-            <button class="flt-btn on" onclick="setFlt('all',this)">Todos</button>
-            <button class="flt-btn"    onclick="setFlt('ok',this)">Normal</button>
-            <button class="flt-btn"    onclick="setFlt('warn',this)">Aviso</button>
-            <button class="flt-btn"    onclick="setFlt('crit',this)">Crítico</button>
-            <span class="db-count" id="dbCount">48 registos</span>
+            <span class="db-count" id="dbCount">0 registos</span>
           </div>
-          <div class="db-tbl-wrap">
+          <div class="db-tbl">
             <table>
               <thead>
                 <tr>
-                  <th style="width:95px">ID</th>
-                  <th style="width:150px">Timestamp</th>
-                  <th>Zona</th>
-                  <th style="width:70px">Temp</th>
-                  <th style="width:75px">Humidade</th>
-                  <th style="width:85px">RPM</th>
-                  <th style="width:100px">Estado</th>
+                  <th>Gateway ID</th>
+                  <th>Controller ID</th>
+                  <th style="width:80px">Temp</th>
+                  <th style="width:80px">Humidade</th>
+                  <th style="width:80px">Speed</th>
+                  <th style="width:80px">CPU</th>
+
                 </tr>
               </thead>
               <tbody id="dbBody"></tbody>
@@ -308,250 +330,582 @@
         </div>
       </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /dash -->
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-/* ─── TEMA ─── */
+/* ─── CONFIG ─── */
+const API = 'http://192.168.33.100:5000/api';
+
+/* ─── THEME ─── */
 (function(){
-  const saved = localStorage.getItem('thermalos-theme') || 'light';
+  const saved = localStorage.getItem('catd-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
 })();
 
-function toggleTheme() {
+function toggleTheme(){
   const html = document.documentElement;
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
-  localStorage.setItem('thermalos-theme', next);
-  if (fanCh) updateChartColors();
-  renderHeat(); // atualiza cores do mapa
+  localStorage.setItem('catd-theme', next);
+  if(fanCh) updateChartColors();
 }
 
-function updateChartColors() {
-  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const grid = dark ? 'rgba(30,45,69,.6)' : 'rgba(180,195,220,.5)';
-  const tick = dark ? '#4a5a6e' : '#6b7a8e';
-  fanCh.options.scales.x.grid.color = grid;
-  fanCh.options.scales.y.grid.color = grid;
-  fanCh.options.scales.x.ticks.color = tick;
-  fanCh.options.scales.y.ticks.color = tick;
-  fanCh.options.scales.y.title.color = tick;
-  fanCh.data.datasets[0].pointBorderColor = dark ? '#07090f' : '#ffffff';
-  fanCh.update();
+/* ─── TOAST ─── */
+function showToast(msg, type='info', dur=3000){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${type}`;
+  t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.display='none'; }, dur);
 }
 
-/* ─── AUTH (localStorage) ─── */
-const USERS_KEY = 'thermalos-users';
-function getUsers(){ try{ return JSON.parse(localStorage.getItem(USERS_KEY))||[]; }catch{ return []; } }
-function saveUsers(l){ localStorage.setItem(USERS_KEY, JSON.stringify(l)); }
+/* ─── SESSION STATE ─── */
+let session = null; // { uid, email, username, token }
+let gateways = [];
+let selectedGW = null;
+let allData = [];
+let fanCh = null;
+let startTime = null;
+let pollTimer = null;
 
-(function seedDemo(){
-  const l = getUsers();
-  if (!l.find(u => u.username === 'admin')) {
-    l.push({ name: 'Administrador', username: 'admin', password: 'admin123' });
-    saveUsers(l);
-  }
-})();
-
-function fillDemo(){
-  document.getElementById('lu').value = 'admin';
-  document.getElementById('lp').value = 'admin123';
-}
-
+/* ─── AUTH ─── */
 function switchTab(t){
   const isLogin = t === 'login';
   document.getElementById('tab-login').classList.toggle('on', isLogin);
   document.getElementById('tab-reg').classList.toggle('on', !isLogin);
   document.getElementById('f-login').style.display = isLogin ? 'block' : 'none';
   document.getElementById('f-reg').style.display   = isLogin ? 'none'  : 'block';
-  ['lerr','rerr','rok'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('lerr').style.display = 'none';
+  document.getElementById('rerr').style.display = 'none';
+  document.getElementById('rok').style.display  = 'none';
   document.getElementById('auth-hint').style.display = isLogin ? 'block' : 'none';
 }
 
-function doLogin(){
-  const u = document.getElementById('lu').value.trim();
-  const p = document.getElementById('lp').value;
-  const err = document.getElementById('lerr');
-  err.style.display = 'none';
-  if (!u || !p){ err.textContent = 'Preenche todos os campos.'; err.style.display = 'block'; return; }
-  const found = getUsers().find(x => x.username === u && x.password === p);
-  if (!found){ err.textContent = 'Utilizador ou palavra-passe incorretos.'; err.style.display = 'block'; return; }
-  sessionStorage.setItem('thermalos-session', JSON.stringify({ username: found.username, name: found.name }));
-  enterDash(found);
+function fillDemo(){
+  document.getElementById('lu').value = 'admin@catd.io';
+  document.getElementById('lp').value = 'admin123';
 }
 
-function doReg(){
-  const n = document.getElementById('rn').value.trim();
-  const u = document.getElementById('ru').value.trim();
-  const p = document.getElementById('rp').value;
-  const p2= document.getElementById('rp2').value;
-  const err= document.getElementById('rerr');
-  const ok = document.getElementById('rok');
-  err.style.display = ok.style.display = 'none';
-  if (!n||!u||!p||!p2){ err.textContent='Preenche todos os campos.'; err.style.display='block'; return; }
-  if (p.length < 6){ err.textContent='Palavra-passe deve ter pelo menos 6 caracteres.'; err.style.display='block'; return; }
-  if (p !== p2){ err.textContent='As palavras-passe não coincidem.'; err.style.display='block'; return; }
-  const users = getUsers();
-  if (users.find(x => x.username === u)){ err.textContent='Esse utilizador já existe.'; err.style.display='block'; return; }
-  users.push({ name: n, username: u, password: p });
-  saveUsers(users);
-  ok.style.display = 'block';
-  setTimeout(() => { switchTab('login'); document.getElementById('lu').value = u; }, 1800);
+/* ── ALTERAÇÃO 1: doLogin guarda session.token ── */
+async function doLogin(){
+  const email = document.getElementById('lu').value.trim();
+  const pass  = document.getElementById('lp').value;
+  const errEl = document.getElementById('lerr');
+  const btn   = document.getElementById('btnLogin');
+  errEl.style.display = 'none';
+  if(!email || !pass){ errEl.textContent='Preenche todos os campos.'; errEl.style.display='block'; return; }
+
+  btn.disabled = true; btn.textContent = 'A entrar...';
+
+  try {
+    const res = await fetch(`${API}/login`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password: pass })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.message || data.error || 'Erro de autenticação');
+
+    // Guarda uid, token e username vindos do backend
+    session = {
+      uid:      data.uid,
+      token:    data.token || data.idToken || data.access_token || '',
+      email,
+      username: data.username || email.split('@')[0]
+    };
+    sessionStorage.setItem('catd-session', JSON.stringify(session));
+    enterDash();
+  } catch(e){
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Entrar no sistema';
+  }
+}
+
+async function doReg(){
+  const username = document.getElementById('rn').value.trim();
+  const email    = document.getElementById('ru').value.trim();
+  const pass     = document.getElementById('rp').value;
+  const errEl    = document.getElementById('rerr');
+  const okEl     = document.getElementById('rok');
+  const btn      = document.getElementById('btnReg');
+  errEl.style.display = okEl.style.display = 'none';
+  if(!username||!email||!pass){ errEl.textContent='Preenche todos os campos.'; errEl.style.display='block'; return; }
+  if(pass.length < 6){ errEl.textContent='Palavra-passe deve ter pelo menos 6 caracteres.'; errEl.style.display='block'; return; }
+
+  btn.disabled = true; btn.textContent = 'A criar conta...';
+  try {
+    const res = await fetch(`${API}/register`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, username, password: pass })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.message || data.error || 'Erro ao registar');
+    okEl.style.display = 'block';
+    setTimeout(() => { switchTab('login'); document.getElementById('lu').value = email; }, 1800);
+  } catch(e){
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Criar conta';
+  }
 }
 
 function doLogout(){
-  sessionStorage.removeItem('thermalos-session');
-  fanCh = null;
+  sessionStorage.removeItem('catd-session');
+  clearInterval(pollTimer);
+  fanCh = null; session = null; gateways = []; allData = [];
   document.getElementById('dash').classList.remove('active');
   document.getElementById('auth').classList.add('active');
   document.getElementById('lp').value = '';
 }
 
-function enterDash(user){
-  const init = user.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+function enterDash(){
+  const init = (session.username || 'U').slice(0,2).toUpperCase();
   document.getElementById('uav').textContent = init;
-  document.getElementById('unm').textContent = user.name;
+  document.getElementById('unm').textContent = session.username || session.email;
   document.getElementById('auth').classList.remove('active');
   document.getElementById('dash').classList.add('active');
   startTime = Date.now();
-  initDash();
+  startUptime();
+  loadGateways();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const sess = sessionStorage.getItem('thermalos-session');
-  if (sess){ try{ enterDash(JSON.parse(sess)); }catch{} }
+  const saved = sessionStorage.getItem('catd-session');
+  if(saved){ try{ session = JSON.parse(saved); enterDash(); }catch{} }
 });
 
-/* ─── NAVEGAÇÃO ─── */
-function gotoPanel(id, el){
-  document.querySelectorAll('.top-nav-btn, .sid-btn').forEach(b => {
-    if (b.getAttribute('onclick')?.includes(`'${id}'`)) b.classList.add('on');
-    else if (b.getAttribute('onclick')?.includes('gotoPanel')) b.classList.remove('on');
-  });
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
-  document.getElementById('p-' + id).classList.add('on');
-  if (id === 'fan' && !fanCh) initFan();
+/* ─── UPTIME ─── */
+function startUptime(){
+  setInterval(() => {
+    if(!startTime) return;
+    const s=Math.floor((Date.now()-startTime)/1000),m=Math.floor(s/60),h=Math.floor(m/60);
+    document.getElementById('uptimeBadge').textContent =
+      h>0 ? `${h}:${String(m%60).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
+           : `${m}:${String(s%60).padStart(2,'0')}`;
+  },1000);
 }
 
-/* ─── MAPA TÉRMICO ─── */
-const ZONES = Array.from({length:32},(_,i)=>`R-${String(i+1).padStart(2,'0')}`);
-let temps = ZONES.map(()=>22+Math.random()*46);
-let fanCh=null, flt='all', elapsed=0, startTime=null;
+/* ─── AUTH HEADERS ─── */
+function authHeaders(){
+  return {
+    'Content-Type':  'application/json',
+    'Authorization': session?.token || ''
+  };
+}
 
-function heatStyle(t){
-  const dark = document.documentElement.getAttribute('data-theme')==='dark';
-  if(dark){
-    if(t<35) return {bg:'#0a1e3d',fg:'#4a8fce'};
-    if(t<50) return {bg:'#0a2820',fg:'#3dbf8a'};
-    if(t<63) return {bg:'#2e1e06',fg:'#e6a020'};
-    if(t<75) return {bg:'#2e1008',fg:'#e05520'};
-    return {bg:'#1e0506',fg:'#d01520'};
-  } else {
-    if(t<35) return {bg:'#dbeafe',fg:'#1d6fa8'};
-    if(t<50) return {bg:'#d1fae5',fg:'#0d7a4e'};
-    if(t<63) return {bg:'#fef3c7',fg:'#b45309'};
-    if(t<75) return {bg:'#ffe4d6',fg:'#c0390a'};
-    return {bg:'#fecaca',fg:'#991b1b'};
+/* ── loadGateways: GET /users/{user_id}/gateways ── */
+async function loadGateways(){
+  if(!session?.uid) return;
+  try {
+    const res = await fetch(`${API}/users/${session.uid}/gateways`, {
+      headers: authHeaders()
+    });
+    if(res.status === 404){ gateways = []; onNoGateways(); return; }
+    if(!res.ok) throw new Error('Erro ao carregar gateways');
+    const data = await res.json();
+    gateways = data.gateways || [];
+    document.getElementById('gwBadge').textContent = gateways.length || '0';
+    if(gateways.length){
+      selectedGW = gateways[0];
+      fetchData();
+      pollTimer = setInterval(fetchData, 8000);
+    } else {
+      onNoGateways();
+    }
+  } catch(e){
+    showToast(e.message, 'err');
+    onNoGateways();
   }
 }
 
-function renderHeat(){
-  const g = document.getElementById('hGrid');
-  g.innerHTML='';
-  temps.forEach((t,i)=>{
-    const {bg,fg}=heatStyle(t);
-    const c=document.createElement('div');
-    c.className='h-cell'; c.style.background=bg; c.style.color=fg;
-    c.innerHTML=`${Math.round(t)}<div class="h-tip">${ZONES[i]}: ${Math.round(t)}°C</div>`;
-    g.appendChild(c);
+function onNoGateways(){
+  document.getElementById('heatBody').innerHTML = `
+    <div class="state-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+      Nenhum gateway encontrado. Associa um gateway abaixo.
+    </div>`;
+  updateStats(null);
+}
+
+/* ── linkGateway: PATCH /gateways/{gateway_id} com userID + linkCode ── */
+async function linkGateway(){
+  const gwId    = document.getElementById('linkGwId').value.trim();
+  const code    = document.getElementById('linkCode').value.trim();
+  const errEl   = document.getElementById('linkErr');
+  const okEl    = document.getElementById('linkOk');
+  const btn     = document.getElementById('btnLink');
+  errEl.style.display = okEl.style.display = 'none';
+
+  if(!gwId)  { errEl.textContent = 'Introduz o Gateway ID.';         errEl.style.display='block'; return; }
+  if(!code)  { errEl.textContent = 'Introduz o código de ligação.';  errEl.style.display='block'; return; }
+  if(!session?.uid){ errEl.textContent = 'Sessão inválida.';         errEl.style.display='block'; return; }
+
+  btn.disabled = true; btn.textContent = 'A associar...';
+  try {
+    const res = await fetch(`${API}/gateways/${gwId}`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify({ userID: session.uid, linkCode: code })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.message || data.error || 'Erro ao associar gateway');
+
+    okEl.textContent = `Gateway "${gwId}" associado com sucesso!`;
+    okEl.style.display = 'block';
+    document.getElementById('linkGwId').value = '';
+    document.getElementById('linkCode').value = '';
+    clearInterval(pollTimer);
+    await loadGateways();
+    showToast('Gateway associado!', 'ok');
+  } catch(e){
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Associar';
+  }
+}
+
+/* ─── FETCH DATA ─── */
+async function fetchData(){
+  if(!session?.uid) return;
+  try {
+    const res = await fetch(`${API}/users/${session.uid}/data`, { headers: authHeaders() });
+    if(res.status === 404){ allData = []; renderHeat([]); renderDB(); return; }
+    if(!res.ok) throw new Error('Erro ao buscar dados');
+    const json = await res.json();
+    allData = json.data || [];
+    document.getElementById('luT').textContent = 'agora';
+    setTimeout(() => {
+      if(document.getElementById('luT').textContent === 'agora')
+        document.getElementById('luT').textContent = 'há poucos segundos';
+    }, 2000);
+    renderHeat(allData);
+    renderDB();
+    populateRacks();
+  } catch(e){
+    showToast('Erro ao atualizar dados: ' + e.message, 'err');
+    document.getElementById('luT').textContent = 'erro na atualização';
+  }
+}
+
+/* ─── RENDER HEAT ─── */
+function heatColor(t){
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if(dark){
+    if(t < 35) return {bg:'#0a1e3d', fg:'#38bdf8'};
+    if(t < 50) return {bg:'#0a2820', fg:'#34d399'};
+    if(t < 63) return {bg:'#2e1e06', fg:'#fbbf24'};
+    if(t < 75) return {bg:'#2e1008', fg:'#f97316'};
+    return {bg:'#1e0506', fg:'#f87171'};
+  } else {
+    if(t < 35) return {bg:'#dbeafe', fg:'#1d6fa8'};
+    if(t < 50) return {bg:'#d1fae5', fg:'#0d7a4e'};
+    if(t < 63) return {bg:'#fef3c7', fg:'#b45309'};
+    if(t < 75) return {bg:'#ffe4d6', fg:'#c0390a'};
+    return {bg:'#fecaca', fg:'#991b1b'};
+  }
+}
+
+/* parse a data entry into per-rack rows */
+function parseCpuData(cpu_data) {
+  // cpu_data is an array of {cpu, hostname, temp}
+  if(!Array.isArray(cpu_data) || cpu_data.length === 0) return { avg: 0, max: 0, hosts: [] };
+  const vals = cpu_data.map(e => parseFloat(e.cpu) || 0);
+  return {
+    avg:   vals.reduce((a,b)=>a+b,0) / vals.length,
+    max:   Math.max(...vals),
+    hosts: cpu_data.map(e => ({ hostname: e.hostname || '–', cpu: parseFloat(e.cpu)||0, temp: parseFloat(e.temp)||0 }))
+  };
+}
+
+function parseEntry(d) {
+  const cpuInfo = parseCpuData(d.cpu_data);
+  const rows = Object.entries(d.temperature_data || {}).map(([rack, temp]) => ({
+    gatewayID: d.gatewayID,
+    rack,
+    temp:     parseFloat(temp) || 0,
+    speed:    parseFloat((d.fan_status || {})[rack]) || 0,
+    cpu:      cpuInfo.avg,
+    cpuMax:   cpuInfo.max,
+    cpuHosts: cpuInfo.hosts,
+    ts:       d.timestamp || 0,
+  }));
+  return rows.length ? rows : [{
+    gatewayID: d.gatewayID, rack: '–',
+    temp: 0, speed: 0, cpu: cpuInfo.avg, cpuMax: cpuInfo.max, cpuHosts: cpuInfo.hosts,
+    ts: d.timestamp || 0
+  }];
+}
+
+function renderHeat(data){
+  const body = document.getElementById('heatBody');
+  if(!data || data.length === 0){
+    body.innerHTML = `<div class="state-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+      Sem dados disponíveis ainda.
+    </div>`;
+    updateStats(null);
+    return;
+  }
+
+  const readings = data.flatMap(d => parseEntry(d));
+  const temps    = readings.map(r => r.temp).filter(t => t > 0);
+  const avgTemp  = temps.length ? temps.reduce((a,b)=>a+b,0)/temps.length : 0;
+  const maxTemp  = temps.length ? Math.max(...temps) : 0;
+
+  updateStats({ avgTemp, maxTemp, readings });
+
+  const units = readings.map(r => {
+    const {bg,fg} = heatColor(r.temp);
+    return `<div class="rack-unit" style="background:${bg};color:${fg};justify-content:space-between;padding:0 8px"
+      title="${r.rack}: ${r.temp.toFixed(1)}°C">
+      <span style="opacity:.7;font-size:10px">${r.rack}</span>
+      <span>${r.temp > 0 ? r.temp.toFixed(1)+'°C' : '–'}</span>
+    </div>`;
   });
-  const avg=temps.reduce((a,b)=>a+b,0)/temps.length;
-  const max=Math.max(...temps);
-  const hot=temps.filter(t=>t>=70).length;
-  document.getElementById('sAvg').innerHTML=`${Math.round(avg)}<span class="stat-unit">°C</span>`;
-  document.getElementById('sMax').innerHTML=`${Math.round(max)}<span class="stat-unit">°C</span>`;
-  document.getElementById('sHot').textContent=hot;
-  const st=document.getElementById('sSt'), sb=document.getElementById('sStB');
-  const dot=document.getElementById('sysDot'), lbl=document.getElementById('sysLabel');
-  if(hot===0){ st.textContent='ONLINE'; st.style.color='var(--cool)'; sb.className='stat-badge b-ok'; sb.textContent='operacional'; dot.style.background='var(--cool)'; lbl.textContent='Sistema operacional'; }
-  else if(hot<=2){ st.textContent='AVISO'; st.style.color='var(--warm)'; sb.className='stat-badge b-warn'; sb.textContent='atenção'; dot.style.background='var(--warm)'; lbl.textContent=`${hot} zona(s) em atenção`; }
-  else{ st.textContent='CRÍTICO'; st.style.color='var(--hot)'; sb.className='stat-badge b-crit'; sb.textContent='intervenção'; dot.style.background='var(--hot)'; lbl.textContent=`${hot} hotspots — intervenção`; }
+
+  const avgFanArr  = readings.filter(r=>r.speed>0);
+  const avgFanVal  = avgFanArr.length ? avgFanArr.reduce((a,r)=>a+r.speed,0)/avgFanArr.length : 0;
+
+  body.innerHTML = `
+    <div class="rack-display">
+      <div>
+        <div class="rack-visual">
+          <div class="rack-visual-title">Rack</div>
+          ${units.join('')}
+        </div>
+      </div>
+      <div class="rack-info">
+        <div class="rack-info-row">
+          <div class="rack-metric">
+            <div class="rack-metric-label">Temperatura</div>
+            <div class="rack-metric-val">${avgTemp.toFixed(1)}<span class="rack-metric-unit">°C</span></div>
+            <div class="rack-metric-sub">média · máx ${maxTemp.toFixed(1)}°C</div>
+          </div>
+          <div class="rack-metric">
+            <div class="rack-metric-label">Velocidade Fan</div>
+            <div class="rack-metric-val">${avgFanVal > 0 ? avgFanVal.toFixed(0) : '--'}<span class="rack-metric-unit">%</span></div>
+            <div class="rack-metric-sub">média dos racks</div>
+          </div>
+
+        </div>
+        <div class="controllers-list">
+          ${readings.map(r => {
+            const {fg} = heatColor(r.temp);
+            // Status based only on temperature thresholds per rack, not the global critical flag
+
+            const hostsHtml = (r.cpuHosts||[]).map(h =>
+              `<div class="ctrl-m"><span>${h.hostname}</span><b>${h.cpu.toFixed(0)}% · ${h.temp > 0 ? h.temp.toFixed(1)+'°C' : '–'}</b></div>`
+            ).join('');
+            return `<div class="ctrl-item">
+              <div class="ctrl-id">${r.rack}</div>
+              <div class="ctrl-metrics">
+                <div class="ctrl-m"><span>Temp</span><b style="color:${fg}">${r.temp.toFixed(1)}°C</b></div>
+                <div class="ctrl-m"><span>Fan</span><b>${r.speed > 0 ? r.speed.toFixed(0)+'%' : '–'}</b></div>
+                <div class="ctrl-m"><span>CPU</span><b>${r.cpu > 0 ? r.cpu.toFixed(1)+'%' : '–'}</b></div>
+                ${hostsHtml}
+              </div>
+
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
 }
 
-function initDash(){
-  renderHeat(); renderDB(); elapsed=0;
-  setInterval(()=>{
-    temps=temps.map(t=>Math.max(20,Math.min(88,t+(Math.random()-.46)*2.4)));
-    renderHeat(); elapsed++;
-    document.getElementById('luT').textContent=elapsed;
-    if(elapsed>=4) elapsed=0;
-    if(startTime){
-      const s=Math.floor((Date.now()-startTime)/1000),m=Math.floor(s/60),h=Math.floor(m/60);
-      document.getElementById('uptimeBadge').textContent=h>0?`${h}:${String(m%60).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`:`${m}:${String(s%60).padStart(2,'0')}`;
-    }
-  },4000);
+function updateStats(s){
+  if(!s){
+    document.getElementById('sTemp').innerHTML  = '--<span class="stat-unit">°C</span>';
+    document.getElementById('sHum').innerHTML   = '--<span class="stat-unit">%</span>';
+    document.getElementById('sSpeed').innerHTML = '--<span class="stat-unit">%</span>';
+    return;
+  }
+  const { avgTemp, maxTemp, readings } = s;
+  const avgFan    = readings.filter(r=>r.speed>0);
+  const avgFanVal = avgFan.length ? avgFan.reduce((a,r)=>a+r.speed,0)/avgFan.length : 0;
+
+  document.getElementById('sTemp').innerHTML    = `${avgTemp.toFixed(1)}<span class="stat-unit">°C</span>`;
+  document.getElementById('sHum').innerHTML     = `${avgFanVal > 0 ? avgFanVal.toFixed(0) : '--'}<span class="stat-unit">%</span>`;
+  document.getElementById('sSpeed').innerHTML   = `${maxTemp > 0 ? maxTemp.toFixed(1) : '--'}<span class="stat-unit">°C</span>`;
+
+
 }
-
-/* ─── VENTOINHA ─── */
-function fanPts(){
-  const st=+document.getElementById('rST').value, mt=+document.getElementById('rMT').value;
-  const mr=+document.getElementById('rMR').value, xr=+document.getElementById('rXR').value;
-  return Array.from({length:9},(_,i)=>{
-    const T=20+i*10;
-    return {T, rpm: T<=st?mr:T>=mt?xr:Math.round(mr+(xr-mr)*((T-st)/(mt-st)))};
-  });
-}
-
-function updFan(){
-  document.getElementById('vST').innerHTML=document.getElementById('rST').value+'<span class="ctrl-unit">°C</span>';
-  document.getElementById('vMT').innerHTML=document.getElementById('rMT').value+'<span class="ctrl-unit">°C</span>';
-  document.getElementById('vMR').innerHTML=document.getElementById('rMR').value+'<span class="ctrl-unit">rpm</span>';
-  document.getElementById('vXR').innerHTML=document.getElementById('rXR').value+'<span class="ctrl-unit">rpm</span>';
-  const pts=fanPts();
-  if(fanCh){fanCh.data.datasets[0].data=pts.map(p=>p.rpm);fanCh.update();}
-  document.getElementById('ptRow').innerHTML=pts.map(p=>`<div class="pt-chip"><span>${p.T}°C</span> → <b>${p.rpm}</b> rpm</div>`).join('');
-}
-
-function initFan(){
-  const dark=document.documentElement.getAttribute('data-theme')==='dark';
-  const grid=dark?'rgba(30,45,69,.6)':'rgba(180,195,220,.5)';
-  const tick=dark?'#4a5a6e':'#6b7a8e';
-  const pts=fanPts();
-  fanCh=new Chart(document.getElementById('fChart'),{
-    type:'line',
-    data:{labels:pts.map(p=>p.T+'°C'),datasets:[{label:'RPM',data:pts.map(p=>p.rpm),borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,0.07)',borderWidth:2,pointRadius:5,pointBackgroundColor:'#5b8dee',pointBorderColor:dark?'#07090f':'#ffffff',pointBorderWidth:2,tension:.35,fill:true}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:grid},ticks:{color:tick,font:{family:'Space Mono',size:11}}},y:{grid:{color:grid},ticks:{color:tick,font:{family:'Space Mono',size:11}},title:{display:true,text:'RPM',color:tick,font:{family:'Space Mono',size:11}}}}}
-  });
-  updFan();
-}
-
-/* ─── BASE DE DADOS ─── */
-const ZONAS=['Rack A','Rack B','Rack C','Rack D','Corredor Frio','UPS','CRAC-1','CRAC-2'];
-const ST_POOL=['ok','ok','ok','ok','warn','warn','crit'];
-const records=Array.from({length:48},(_,i)=>{
-  const d=new Date(Date.now()-i*1_800_000), s=ST_POOL[Math.floor(Math.random()*ST_POOL.length)];
-  const t=s==='ok'?22+Math.random()*32:s==='warn'?58+Math.random()*12:74+Math.random()*13;
-  return {id:`LOG-${String(1000+i).padStart(4,'0')}`,ts:d.toLocaleString('pt-PT'),zona:ZONAS[Math.floor(Math.random()*ZONAS.length)],t:Math.round(t),h:Math.round(32+Math.random()*38),rpm:Math.round(900+Math.random()*2700),s};
-});
-
-function setFlt(f,el){ flt=f; document.querySelectorAll('.flt-btn').forEach(b=>b.classList.remove('on')); el.classList.add('on'); renderDB(); }
 
 function renderDB(){
-  const q=document.getElementById('dbQ').value.toLowerCase();
-  const rows=records.filter(r=>(flt==='all'||r.s===flt)&&(!q||JSON.stringify(r).toLowerCase().includes(q)));
-  document.getElementById('dbCount').textContent=`${rows.length} registo${rows.length!==1?'s':''}`;
-  document.getElementById('recBadge').textContent=rows.length;
-  const lbl={ok:'Normal',warn:'Aviso',crit:'Crítico'}, cls={ok:'db-ok',warn:'db-warn',crit:'db-crit'};
-  if(!rows.length){ document.getElementById('dbBody').innerHTML=`<tr class="empty-row"><td colspan="7">Nenhum registo encontrado</td></tr>`; return; }
-  document.getElementById('dbBody').innerHTML=rows.slice(0,25).map(r=>`<tr><td>${r.id}</td><td>${r.ts}</td><td>${r.zona}</td><td>${r.t}°C</td><td>${r.h}%</td><td>${r.rpm}</td><td><span class="dot-badge ${cls[r.s]}">${lbl[r.s]}</span></td></tr>`).join('');
+  const q = (document.getElementById('dbQ')?.value || '').toLowerCase();
+
+  const rows = allData.filter(r => {
+    return !q || JSON.stringify(r).toLowerCase().includes(q);
+  });
+
+  document.getElementById('dbCount').textContent = `${rows.length} registo${rows.length !== 1 ? 's' : ''}`;
+
+  if(!rows.length){
+    document.getElementById('dbBody').innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:24px">Nenhum registo encontrado</td></tr>`;
+    return;
+  }
+
+  document.getElementById('dbBody').innerHTML = rows.slice(0,50).flatMap(r => {
+    const racks = Object.keys(r.temperature_data || {'–': 0});
+    return racks.map(rack => {
+      const t   = parseFloat((r.temperature_data||{})[rack]) || 0;
+      const sp  = parseFloat((r.fan_status      ||{})[rack]) || 0;
+      const cpuArr = Array.isArray(r.cpu_data) ? r.cpu_data : [];
+      const cpuVals = cpuArr.map(e => parseFloat(e.cpu)||0);
+      const cpu = cpuVals.length ? cpuVals.reduce((a,b)=>a+b,0)/cpuVals.length : 0;
+      return `<tr>
+        <td>${r.gatewayID || '–'}</td>
+        <td>${rack}</td>
+        <td>${t   > 0 ? t.toFixed(1)+'°C'  : '–'}</td>
+        <td>–</td>
+        <td>${sp  > 0 ? sp.toFixed(0)+'%'  : '–'}</td>
+        <td>${cpu > 0 ? cpu.toFixed(1)+'%' : '–'}</td>
+
+      </tr>`;
+    });
+  }).join('');
 }
 
-document.addEventListener('keydown',e=>{
-  if(e.key!=='Enter') return;
-  const fl=document.getElementById('f-login'), fr=document.getElementById('f-reg');
-  if(fl&&fl.style.display!=='none') doLogin();
-  else if(fr&&fr.style.display!=='none') doReg();
+/* ─── NAVIGATION ─── */
+function gotoPanel(id, el){
+  document.querySelectorAll('.top-nav-btn, .sid-btn').forEach(b => {
+    if(b.getAttribute('onclick')?.includes(`'${id}'`)) b.classList.add('on');
+    else if(b.getAttribute('onclick')?.includes('gotoPanel')) b.classList.remove('on');
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.getElementById('p-' + id).classList.add('on');
+  if(id === 'fan') populateRacks();
+  if(id === 'db') renderDB();
+}
+
+/* ─── LIMITES ─── */
+function populateRacks(){
+  // Build rack list from allData
+  const sel = document.getElementById('aRackSel');
+  if(!sel) return;
+  const racks = new Set();
+  (allData || []).forEach(d => Object.keys(d.temperature_data || {}).forEach(r => racks.add(r)));
+  // Keep current selection if possible
+  const cur = sel.value;
+  sel.innerHTML = '<option value="all">Todos os racks</option>';
+  racks.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r; opt.textContent = r;
+    sel.appendChild(opt);
+  });
+  if([...racks].includes(cur)) sel.value = cur;
+  updLimits();
+}
+
+function updLimits(){
+  const maxCpu  = document.getElementById('rMaxCpu')?.value  || 80;
+  const maxTemp = document.getElementById('rMaxTemp')?.value || 60;
+  const maxRpm  = document.getElementById('rMaxRpm')?.value  || 260;
+  const rack    = document.getElementById('aRackSel')?.value || 'all';
+
+  document.getElementById('vMaxCpu').innerHTML  = maxCpu  + '<span class="ctrl-unit">%</span>';
+  document.getElementById('vMaxTemp').innerHTML = maxTemp + '<span class="ctrl-unit">°C</span>';
+  document.getElementById('vMaxRpm').innerHTML  = maxRpm  + '<span class="ctrl-unit">rpm</span>';
+
+  const rackLabel = rack === 'all' ? 'todos os racks' : rack;
+  document.getElementById('rackLabel').textContent = rackLabel;
+
+  const gwInp  = document.getElementById('aGwId')?.value.trim();
+  const gwName = gwInp || selectedGW?.id || selectedGW?.gatewayID || '–';
+  document.getElementById('previewGw').textContent   = gwName;
+  document.getElementById('previewRack').textContent = rackLabel;
+  document.getElementById('previewCpu').textContent  = maxCpu  + '%';
+  document.getElementById('previewTemp').textContent = maxTemp + '°C';
+  document.getElementById('previewRpm').textContent  = maxRpm  + ' rpm';
+}
+
+/* ─── SEND LIMITS ─── */
+async function sendLimits(){
+  if(gateways.length === 0){ showToast('Nenhum gateway disponível', 'err'); return; }
+  const maxCpu    = parseInt(document.getElementById('rMaxCpu').value);
+  const maxTemp   = parseInt(document.getElementById('rMaxTemp').value);
+  const maxRpm    = parseInt(document.getElementById('rMaxRpm').value);
+  const rack      = document.getElementById('aRackSel').value || 'all';
+  const gwInp     = document.getElementById('aGwId')?.value.trim();
+  const gatewayID = gwInp || selectedGW?.id || selectedGW?.gatewayID || '';
+
+  // If "all", send one action per rack; otherwise send just the selected rack
+  const racks = rack === 'all'
+    ? [...new Set((allData||[]).flatMap(d => Object.keys(d.temperature_data||{})))]
+    : [rack];
+
+  if(racks.length === 0) racks.push('all');
+
+  const btn = document.getElementById('btnSend');
+  btn.disabled = true; btn.textContent = 'A aplicar...';
+  try {
+    await Promise.all(racks.map(r =>
+      fetch(`${API}/actions`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify({ gatewayID, controllerID: r, cpu: maxCpu, temp: maxTemp, speed: maxRpm })
+      })
+    ));
+    showToast(`Limites aplicados a: ${racks.join(', ')}`, 'ok');
+  } catch(e){
+    showToast(e.message, 'err');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Aplicar';
+  }
+}
+
+/* ─── DB / HISTÓRICO ─── */
+
+function renderDB(){
+  const q = (document.getElementById('dbQ')?.value || '').toLowerCase();
+
+  const rows = allData.filter(r => {
+    return !q || JSON.stringify(r).toLowerCase().includes(q);
+  });
+
+  document.getElementById('dbCount').textContent = `${rows.length} registo${rows.length !== 1 ? 's' : ''}`;
+
+  if(!rows.length){
+    document.getElementById('dbBody').innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:24px">Nenhum registo encontrado</td></tr>`;
+    return;
+  }
+
+  document.getElementById('dbBody').innerHTML = rows.slice(0,50).flatMap(r => {
+    const racks = Object.keys(r.temperature_data || {'–': 0});
+    return racks.map(rack => {
+      const t  = parseFloat((r.temperature_data||{})[rack]) || 0;
+      const sp = parseFloat((r.fan_status      ||{})[rack]) || 0;
+      const cpuArr = Array.isArray(r.cpu_data) ? r.cpu_data : [];
+      const cpuVals = cpuArr.map(e => parseFloat(e.cpu)||0);
+      const cpu = cpuVals.length ? cpuVals.reduce((a,b)=>a+b,0)/cpuVals.length : 0;
+      return `<tr>
+        <td>${r.gatewayID || '–'}</td>
+        <td>${rack}</td>
+        <td>${t  > 0 ? t.toFixed(1)+'°C'    : '–'}</td>
+        <td>–</td>
+        <td>${sp > 0 ? sp.toFixed(0)+'%'    : '–'}</td>
+        <td>${cpu> 0 ? cpu.toFixed(1)+'%'   : '–'}</td>
+
+      </tr>`;
+    });
+  }).join('');
+}
+
+/* ─── KEYBOARD ─── */
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Enter') return;
+  const fl = document.getElementById('f-login');
+  const fr = document.getElementById('f-reg');
+  if(fl && fl.style.display !== 'none') doLogin();
+  else if(fr && fr.style.display !== 'none') doReg();
 });
 </script>
 </body>
