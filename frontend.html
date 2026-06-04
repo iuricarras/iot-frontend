@@ -843,12 +843,13 @@ async function sendLimits(){
   const gwInp     = document.getElementById('aGwId')?.value.trim();
   const gatewayID = gwInp || selectedGW?.id || selectedGW?.gatewayID || '';
 
-  // If "all", send one action per rack; otherwise send just the selected rack
   const racks = rack === 'all'
     ? [...new Set((allData||[]).flatMap(d => Object.keys(d.temperature_data||{})))]
     : [rack];
 
   if(racks.length === 0) racks.push('all');
+
+  const timestamp = Math.floor(Date.now() / 1000)   // ← timestamp da ação
 
   const btn = document.getElementById('btnSend');
   btn.disabled = true; btn.textContent = 'A aplicar...';
@@ -857,7 +858,7 @@ async function sendLimits(){
       fetch(`${API}/actions`, {
         method: 'POST',
         headers: authHeaders(),
-        body: JSON.stringify({ gatewayID, controllerID: r, cpu: maxCpu, temp: maxTemp, speed: maxRpm })
+        body: JSON.stringify({ gatewayID, controllerID: r, cpu: maxCpu, temp: maxTemp, speed: maxRpm, timestamp })
       })
     ));
     showToast(`Limites aplicados a: ${racks.join(', ')}`, 'ok');
