@@ -655,14 +655,19 @@ function renderHeat(data){
     updateStats(null);
     return;
   }
-
-  const readings = data.flatMap(d => parseEntry(d));
+ 
+  // ── Só a última leitura recebida (timestamp mais recente) ──
+  const latest = data.reduce((a, b) =>
+    ((b.timestamp || 0) > (a.timestamp || 0) ? b : a)
+  );
+ 
+  const readings = parseEntry(latest);
   const temps    = readings.map(r => r.temp).filter(t => t > 0);
   const avgTemp  = temps.length ? temps.reduce((a,b)=>a+b,0)/temps.length : 0;
   const maxTemp  = temps.length ? Math.max(...temps) : 0;
-
+ 
   updateStats({ avgTemp, maxTemp, readings });
-
+ 
   const units = readings.map(r => {
     const {bg,fg} = heatColor(r.temp);
     return `<div class="rack-unit" style="background:${bg};color:${fg};justify-content:space-between;padding:0 8px"
@@ -671,10 +676,10 @@ function renderHeat(data){
       <span>${r.temp > 0 ? r.temp.toFixed(1)+'°C' : '–'}</span>
     </div>`;
   });
-
+ 
   const avgFanArr  = readings.filter(r=>r.speed>0);
   const avgFanVal  = avgFanArr.length ? avgFanArr.reduce((a,r)=>a+r.speed,0)/avgFanArr.length : 0;
-
+ 
   body.innerHTML = `
     <div class="rack-display">
       <div>
@@ -695,13 +700,13 @@ function renderHeat(data){
             <div class="rack-metric-val">${avgFanVal > 0 ? avgFanVal.toFixed(0) : '--'}<span class="rack-metric-unit">%</span></div>
             <div class="rack-metric-sub">média dos racks</div>
           </div>
-
+ 
         </div>
         <div class="controllers-list">
           ${readings.map(r => {
             const {fg} = heatColor(r.temp);
             // Status based only on temperature thresholds per rack, not the global critical flag
-
+ 
             const hostsHtml = (r.cpuHosts||[]).map(h =>
               `<div class="ctrl-m"><span>${h.hostname}</span><b>${h.cpu.toFixed(0)}% · ${h.temp > 0 ? h.temp.toFixed(1)+'°C' : '–'}</b></div>`
             ).join('');
@@ -713,13 +718,14 @@ function renderHeat(data){
                 <div class="ctrl-m"><span>CPU</span><b>${r.cpu > 0 ? r.cpu.toFixed(1)+'%' : '–'}</b></div>
                 ${hostsHtml}
               </div>
-
+ 
             </div>`;
           }).join('')}
         </div>
       </div>
     </div>`;
 }
+
 
 function updateStats(s){
   if(!s){
